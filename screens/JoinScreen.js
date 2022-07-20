@@ -19,23 +19,19 @@ const HideKeyboard = ({ children }) => (
 
 export default function CreateFridgeScreen({ navigation }) {
   const handleGoBack = () => {
-    navigation.goBack();
+    navigation.navigate("Home");
   };
 
-  const handleFridgeNameInput = (text) => {
-    console.log("NAME: " + text);
+  const handleFridgeIdInput = (text) => {
+    console.log("Id: " + text);
   };
 
-  const handleFridgeVolumeInput = (text) => {
-    console.log("VOLUME: " + text);
+  const handleJoin = () => {
+    console.log("JOIN FRIDGE");
   };
 
-  const handleAdd = () => {
-    console.log("ADD FRIDGE");
-  };
-
-  const handleJoinOther = () => {
-    navigation.navigate("JoinFridge");
+  const handleScan = () => {
+    console.log("SCAN");
   };
 
   return (
@@ -44,23 +40,25 @@ export default function CreateFridgeScreen({ navigation }) {
         <GoBack from="Home" handleGoBack={handleGoBack} />
         <Text style={styles.title}>Create new fridge</Text>
         <Input
-          placeholder={"Fridge Name"}
-          handleChangeText={handleFridgeNameInput}
-        />
-        <Input
-          placeholder={"Volume of fridge (L)"}
-          handleChangeText={handleFridgeVolumeInput}
-          keyboardType={"numeric"}
+          placeholder={"Fridge ID"}
+          handleChangeText={handleFridgeIdInput}
         />
         <ActionButton
-          handlePress={handleAdd}
-          action="Add"
+          handlePress={handleJoin}
+          action="Join"
           customerStyle={{ backgroundColor: "#000" }}
           textColor="#fff"
         />
-        <Pressable style={styles.joinOtherContainer} onPress={handleJoinOther}>
-          <Text style={styles.joinOtherText}>Wanna join other's fridge?</Text>
-        </Pressable>
+        <ActionButton
+          handlePress={handleScan}
+          action="Scan QR"
+          customerStyle={{
+            backgroundColor: "#fff",
+            borderWidth: 1,
+            borderColor: "#000",
+          }}
+          textColor="#000"
+        />
       </View>
     </HideKeyboard>
   );
@@ -77,17 +75,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     marginBottom: 40,
-  },
-  joinOtherContainer: {
-    position: "absolute",
-    bottom: 40,
-  },
-  joinOtherText: {
-    textAlign: "center",
-    color: "#000",
-    textDecorationColor: "#000",
-    textDecorationLine: "underline",
-    fontSize: 16,
-    fontWeight: "200",
   },
 });
