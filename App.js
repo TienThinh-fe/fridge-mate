@@ -7,6 +7,7 @@ import HomeScreen from "./screens/HomeScreen";
 import CreateFridgeScreen from "./screens/CreateFridgeScreen";
 import JoinScreen from "./screens/JoinScreen";
 import ManageScreen from "./screens/ManageScreen";
+import AddFoodScreen from "./screens/AddFoodScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +38,11 @@ export default function App() {
         <Stack.Screen
           name="ManageFridge"
           component={ManageScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AddFood"
+          component={AddFoodScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

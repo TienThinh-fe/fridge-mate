@@ -11,7 +11,7 @@ export default function ManageScreen({ navigation }) {
   };
 
   const handleAddFood = () => {
-    console.log("Add food");
+    navigation.navigate("AddFood");
   };
 
   return (
