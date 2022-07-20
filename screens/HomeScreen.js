@@ -12,6 +12,8 @@ export default function HomeScreen({ navigation }) {
     console.log("Feature pressed: " + type);
     if (type === "fridge") {
       navigation.navigate("CreateFridge", { from: "Home" });
+    } else if (type === "recipe") {
+      navigation.navigate("ManageFridge");
     }
   };
 
