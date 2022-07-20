@@ -3,13 +3,16 @@ import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import Logo from "../components/Logo";
 import FeaturePicker from "../components/FeaturePicker";
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   const handleLogout = () => {
     console.log("Logout");
   };
 
   const handlePressFeature = (event, type) => {
     console.log("Feature pressed: " + type);
+    if (type === "fridge") {
+      navigation.navigate("CreateFridge", { from: "Home" });
+    }
   };
 
   return (
