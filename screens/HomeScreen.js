@@ -1,23 +1,35 @@
 import { View, Text, StyleSheet, Pressable, Image } from "react-native";
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import * as Google from "expo-auth-session/providers/google";
+import { doc, getDoc } from "firebase/firestore";
 
 import Logo from "../components/Logo";
 import FeaturePicker from "../components/FeaturePicker";
 
-export default function HomeScreen({ navigation, route }) {
-  const [userInfo, setUserInfo] = useState(route.params?.userInfo);
+import AppContext from "../context/AppContext";
+import db from "../firebase";
 
-  console.log(userInfo);
+export default function HomeScreen({ navigation, route }) {
+  const myContext = useContext(AppContext);
+
+  useEffect(() => {
+    console.log(myContext.user);
+  }, []);
 
   const handleLogout = async () => {
     console.log("logout");
   };
 
-  const handlePressFeature = (event, type) => {
-    console.log("Feature pressed: " + type);
+  const handlePressFeature = async (event, type) => {
+    const docRef = doc(db, "user", myContext.user.id);
+    const docSnap = await getDoc(docRef);
+
     if (type === "fridge") {
-      navigation.navigate("CreateFridge", { from: "Home" });
+      if (docSnap.data().fridgeId === null) {
+        navigation.navigate("CreateFridge", { from: "Home" });
+      } else {
+        navigation.navigate("ManageFridge");
+      }
     } else if (type === "recipe") {
       navigation.navigate("ManageFridge");
     }
@@ -27,7 +39,7 @@ export default function HomeScreen({ navigation, route }) {
     <View style={styles.container}>
       <Logo fontSize={24} />
       <View style={styles.welcomeContainer}>
-        <Text style={styles.welcomeText}>Hello, {userInfo.name}</Text>
+        <Text style={styles.welcomeText}>Hello, {myContext.user.name}</Text>
         <Pressable onPress={handleLogout}>
           <Image source={require("../assets/close-circle.png")} />
         </Pressable>

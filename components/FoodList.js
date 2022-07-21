@@ -2,17 +2,18 @@ import { ScrollView, StyleSheet } from "react-native";
 
 import FoodItem from "./FoodItem";
 
-export default function FoodList() {
+export default function FoodList({ listOfFood }) {
   return (
     <ScrollView style={styles.container}>
-      <FoodItem foodName="Banana" date="19/07/2022" quantity="2" />
-      <FoodItem foodName="Egg" date="16/07/2022" quantity="10" />
-      <FoodItem
-        foodName="Tomato"
-        date="10/07/2022"
-        quantity="4"
-        isSpoiled={true}
-      />
+      {listOfFood.map((food, index) => (
+        <FoodItem
+          key={index}
+          foodName={food.name}
+          date={food.date}
+          quantity={food.quantity}
+          isSpoiled={food.isSpoiled ? true : false}
+        />
+      ))}
     </ScrollView>
   );
 }

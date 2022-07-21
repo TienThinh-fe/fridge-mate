@@ -6,10 +6,15 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+import { useState, useContext } from "react";
+import { collection, addDoc, doc, updateDoc } from "firebase/firestore";
 
 import GoBack from "../components/GoBack";
 import Input from "../components/Input";
 import ActionButton from "../components/ActionButton";
+
+import AppContext from "../context/AppContext";
+import db from "../firebase";
 
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -18,20 +23,36 @@ const HideKeyboard = ({ children }) => (
 );
 
 export default function CreateFridgeScreen({ navigation }) {
+  const [name, setName] = useState("");
+  const [volume, setVolume] = useState("");
+  const myContext = useContext(AppContext);
+
   const handleGoBack = () => {
     navigation.goBack();
   };
 
   const handleFridgeNameInput = (text) => {
-    console.log("NAME: " + text);
+    setName(text);
   };
 
   const handleFridgeVolumeInput = (text) => {
-    console.log("VOLUME: " + text);
+    setVolume(text);
   };
 
-  const handleAdd = () => {
-    console.log("ADD FRIDGE");
+  const handleAdd = async () => {
+    try {
+      const docRef = await addDoc(collection(db, "fridge"), {
+        name,
+        volume,
+        userId: myContext.user.id,
+      });
+      await updateDoc(doc(db, "user", myContext.user.id), {
+        fridgeId: docRef.id,
+      });
+      navigation.navigate("ManageFridge");
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
   };
 
   const handleJoinOther = () => {
