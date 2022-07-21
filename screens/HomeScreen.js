@@ -1,11 +1,17 @@
 import { View, Text, StyleSheet, Pressable, Image } from "react-native";
+import { useState } from "react";
+import * as Google from "expo-auth-session/providers/google";
 
 import Logo from "../components/Logo";
 import FeaturePicker from "../components/FeaturePicker";
 
-export default function HomeScreen({ navigation }) {
-  const handleLogout = () => {
-    console.log("Logout");
+export default function HomeScreen({ navigation, route }) {
+  const [userInfo, setUserInfo] = useState(route.params?.userInfo);
+
+  console.log(userInfo);
+
+  const handleLogout = async () => {
+    console.log("logout");
   };
 
   const handlePressFeature = (event, type) => {
@@ -21,7 +27,7 @@ export default function HomeScreen({ navigation }) {
     <View style={styles.container}>
       <Logo fontSize={24} />
       <View style={styles.welcomeContainer}>
-        <Text style={styles.welcomeText}>Hello, Hoang Tien Thinh</Text>
+        <Text style={styles.welcomeText}>Hello, {userInfo.name}</Text>
         <Pressable onPress={handleLogout}>
           <Image source={require("../assets/close-circle.png")} />
         </Pressable>

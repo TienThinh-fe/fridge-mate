@@ -1,12 +1,33 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
+import * as WebBrowser from "expo-web-browser";
+import * as Google from "expo-auth-session/providers/google";
 
 import Logo from "../components/Logo";
 
 export default function LoginScreen({ navigation }) {
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    expoClientId:
+      "905355758203-3mjq6b15l5c7jgqamm308in86ljs2qg3.apps.googleusercontent.com",
+  });
+
+  useEffect(() => {
+    if (response?.type === "success") {
+      const { authentication } = response;
+      getUserInfo(authentication);
+    }
+  }, [response]);
+
+  const getUserInfo = async (authentication) => {
+    const result = await fetch("https://www.googleapis.com/userinfo/v2/me", {
+      headers: { Authorization: `Bearer ${authentication.accessToken}` },
+    });
+    const user = await result.json();
+    navigation.navigate("Home", { userInfo: user });
+  };
+
   const handleGoogleLogin = () => {
-    console.log("Google login");
-    navigation.navigate("Home");
+    promptAsync();
   };
 
   return (
