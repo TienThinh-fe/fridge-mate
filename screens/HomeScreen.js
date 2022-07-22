@@ -22,7 +22,7 @@ export default function HomeScreen({ navigation, route }) {
     const docSnap = await getDoc(docRef);
 
     if (type === "fridge") {
-      if (docSnap.data().fridgeId === null) {
+      if (docSnap.data().fridgeId === "") {
         navigation.navigate("CreateFridge", { from: "Home" });
       } else {
         navigation.navigate("ManageFridge");
