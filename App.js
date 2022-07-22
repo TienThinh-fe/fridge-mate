@@ -12,6 +12,7 @@ import ManageScreen from "./screens/ManageScreen";
 import AddFoodScreen from "./screens/AddFoodScreen";
 import QrScreen from "./screens/QrScreen";
 import ScanScreen from "./screens/ScanScreen";
+import GetRecipeScreen from "./screens/GetRecipeScreen";
 
 import AppContext from "./context/AppContext";
 
@@ -29,7 +30,7 @@ export default function App() {
     <AppContext.Provider value={userSettings}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen
+          {/* <Stack.Screen
             name="Login"
             component={LoginScreen}
             options={{ headerShown: false }}
@@ -67,6 +68,11 @@ export default function App() {
           <Stack.Screen
             name="Scan"
             component={ScanScreen}
+            options={{ headerShown: false }}
+          /> */}
+          <Stack.Screen
+            name="GetRecipe"
+            component={GetRecipeScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
