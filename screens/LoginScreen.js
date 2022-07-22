@@ -1,8 +1,9 @@
 import { useEffect, useContext } from "react";
+import React from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
 import Logo from "../components/Logo";
 import db from "../firebase/index";
@@ -30,7 +31,10 @@ export default function LoginScreen({ navigation }) {
     });
     const user = await result.json();
 
-    if (doc(db, "user", user.id) === null) {
+    const docRef = doc(db, "user", user.id);
+    const docSnap = await getDoc(docRef);
+
+    if (!docSnap.exists()) {
       try {
         const docRef = await setDoc(doc(db, "user", user.id), {
           user,

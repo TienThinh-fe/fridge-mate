@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import { useState, useEffect, useContext } from "react";
 import * as Google from "expo-auth-session/providers/google";
+import React from "react";
 import { doc, getDoc } from "firebase/firestore";
 
 import Logo from "../components/Logo";
@@ -11,10 +12,6 @@ import db from "../firebase";
 
 export default function HomeScreen({ navigation, route }) {
   const myContext = useContext(AppContext);
-
-  useEffect(() => {
-    console.log(myContext.user);
-  }, []);
 
   const handleLogout = async () => {
     console.log("logout");
