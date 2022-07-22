@@ -5,15 +5,68 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+
+import { formatDate } from "../helpers";
+
+import AppContext from "../context/AppContext";
+import db from "../firebase";
 
 export default function FoodItem({
   handleLongPress,
+  index,
   foodName,
   date,
   quantity,
   isSpoiled,
 }) {
+  const [itemQuantity, setItemQuantity] = useState(quantity);
+  const [fridgeId, setFridgeId] = useState("");
+  const [listOfFood, setListOfFood] = useState([]);
+
+  const myContext = useContext(AppContext);
+
+  useEffect(() => {
+    getFridgeData();
+  }, []);
+
+  useEffect(() => {
+    updateFoodItem();
+  }, [itemQuantity]);
+
+  const getFridgeData = async () => {
+    const docRef = doc(db, "user", myContext.user.id);
+    const docSnap = await getDoc(docRef);
+    const fId = docSnap.data().fridgeId;
+    const fridgeRef = doc(db, "fridge", fId);
+    const fridgeSnap = await getDoc(fridgeRef);
+    setFridgeId(fId);
+    setListOfFood(fridgeSnap.data().listOfFood);
+  };
+
+  const updateFoodItem = () => {
+    if (listOfFood.length > 0) {
+      setListOfFood((prevList) => {
+        const newList = [...prevList];
+        newList[index].quantity = itemQuantity;
+        newList[index].date = formatDate();
+        return newList;
+      });
+    }
+  };
+
+  const handleUpdateQuantity = async () => {
+    updateFoodItem();
+    try {
+      await updateDoc(doc(db, "fridge", fridgeId), {
+        listOfFood: listOfFood,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <TouchableOpacity onLongPress={handleLongPress}>
       <View
@@ -27,8 +80,13 @@ export default function FoodItem({
           {isSpoiled && <Text style={styles.spoiled}>!</Text>}
         </View>
         <View style={styles.quantityContainer}>
-          <Text style={styles.quantity}>{quantity}</Text>
-          {/* <TextInput style={styles.quantity} value={quantity} /> */}
+          <TextInput
+            style={styles.quantity}
+            value={itemQuantity}
+            onChangeText={(text) => setItemQuantity(text)}
+            onBlur={handleUpdateQuantity}
+            keyboardType="numeric"
+          />
         </View>
       </View>
     </TouchableOpacity>

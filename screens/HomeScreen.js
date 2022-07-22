@@ -13,8 +13,8 @@ import db from "../firebase";
 export default function HomeScreen({ navigation, route }) {
   const myContext = useContext(AppContext);
 
-  const handleLogout = async () => {
-    console.log("logout");
+  const handleLogout = () => {
+    navigation.navigate("Login");
   };
 
   const handlePressFeature = async (event, type) => {
@@ -28,7 +28,7 @@ export default function HomeScreen({ navigation, route }) {
         navigation.navigate("ManageFridge");
       }
     } else if (type === "recipe") {
-      navigation.navigate("ManageFridge");
+      // navigation.navigate("ManageFridge");
     }
   };
 

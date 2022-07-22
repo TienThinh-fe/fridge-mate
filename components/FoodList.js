@@ -1,4 +1,10 @@
-import { ScrollView, StyleSheet, Alert } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import React, { useState, useContext, useEffect } from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 
@@ -6,6 +12,12 @@ import FoodItem from "./FoodItem";
 
 import AppContext from "../context/AppContext";
 import db from "../firebase";
+
+const HideKeyboard = ({ children }) => (
+  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    {children}
+  </TouchableWithoutFeedback>
+);
 
 export default function FoodList({ listOfFood }) {
   const [fridgeId, setFridgeId] = useState("");
@@ -44,18 +56,23 @@ export default function FoodList({ listOfFood }) {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      {listOfFood.map((food, index) => (
-        <FoodItem
-          key={index}
-          foodName={food.name}
-          date={food.date}
-          quantity={food.quantity}
-          isSpoiled={food.isSpoiled ? true : false}
-          handleLongPress={(event) => handleDeleteItem(event, index, food.name)}
-        />
-      ))}
-    </ScrollView>
+    <HideKeyboard>
+      <ScrollView style={styles.container}>
+        {listOfFood.map((food, index) => (
+          <FoodItem
+            key={index}
+            index={index}
+            foodName={food.name}
+            date={food.date}
+            quantity={food.quantity}
+            isSpoiled={food.isSpoiled ? true : false}
+            handleLongPress={(event) =>
+              handleDeleteItem(event, index, food.name)
+            }
+          />
+        ))}
+      </ScrollView>
+    </HideKeyboard>
   );
 }
 
