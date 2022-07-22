@@ -44,12 +44,12 @@ export default function HomeScreen({ navigation, route }) {
       <View style={styles.functionPickerContainer}>
         <FeaturePicker
           featureName={"Manage your fridge"}
-          imageSrc="../assets/fridge.png"
+          imageSrc={require("../assets/fridge.png")}
           handlePressFeature={(e) => handlePressFeature(e, "fridge")}
         />
         <FeaturePicker
           featureName={"Get recipe"}
-          imageSrc="../assets/recipe.png"
+          imageSrc={require("../assets/recipe.png")}
           handlePressFeature={(e) => handlePressFeature(e, "recipe")}
         />
       </View>
