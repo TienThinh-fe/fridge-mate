@@ -26,8 +26,8 @@ export default function FoodList({ listOfFood }) {
     setFridgeId(fridgeId);
   };
 
-  const handleDeleteItem = (event, index) => {
-    Alert.alert("Delete Item", `Are you sure you want to delete ${index}?`, [
+  const handleDeleteItem = (event, index, name) => {
+    Alert.alert("Delete Item", `Are you sure you want to delete ${name}?`, [
       { text: "Cancel" },
       { text: "Delete", onPress: () => deleteItemInFirestore(index) },
     ]);
@@ -52,7 +52,7 @@ export default function FoodList({ listOfFood }) {
           date={food.date}
           quantity={food.quantity}
           isSpoiled={food.isSpoiled ? true : false}
-          handleLongPress={(event) => handleDeleteItem(event, index)}
+          handleLongPress={(event) => handleDeleteItem(event, index, food.name)}
         />
       ))}
     </ScrollView>
