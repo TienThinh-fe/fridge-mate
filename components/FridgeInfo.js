@@ -1,12 +1,15 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, Pressable, StyleSheet } from "react-native";
+import React from "react";
 
-export default function FridgeInfo({ fridgeName, fridgeId }) {
+export default function FridgeInfo({ handlePressInfo, fridgeName, fridgeId }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.textContainer}>
+      <Pressable onPress={handlePressInfo}>
         <Text style={styles.name}>{fridgeName}</Text>
+      </Pressable>
+      <Pressable onPress={handlePressInfo}>
         <Text style={styles.id}>#{fridgeId}</Text>
-      </Text>
+      </Pressable>
     </View>
   );
 }
@@ -18,10 +21,6 @@ const styles = StyleSheet.create({
     left: 32,
     zIndex: 1,
   },
-  textContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
   name: {
     fontSize: 16,
     fontWeight: "600",
@@ -29,7 +28,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   id: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: "600",
     color: "#AAAAAA",
   },

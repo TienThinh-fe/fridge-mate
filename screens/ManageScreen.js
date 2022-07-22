@@ -1,4 +1,5 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Pressable } from "react-native";
+import React, { Component } from "react";
 import { useEffect, useState, useContext } from "react";
 import { doc, getDoc } from "firebase/firestore";
 
@@ -39,10 +40,19 @@ export default function ManageScreen({ navigation }) {
     navigation.navigate("AddFood");
   };
 
+  const handleToQr = () => {
+    console.log(123);
+    navigation.navigate("Qr");
+  };
+
   return (
     <View style={styles.container}>
       <GoBack from="Home" handleGoBack={handleGoBack} />
-      <FridgeInfo fridgeName={fridgeName} fridgeId="123abc" />
+      <FridgeInfo
+        fridgeName={fridgeName}
+        fridgeId="123abc"
+        handlePressInfo={handleToQr}
+      />
       <FoodList listOfFood={listOfFood} />
       <FloatingButton onPress={handleAddFood} />
     </View>
