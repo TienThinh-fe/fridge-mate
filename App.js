@@ -11,6 +11,7 @@ import JoinScreen from "./screens/JoinScreen";
 import ManageScreen from "./screens/ManageScreen";
 import AddFoodScreen from "./screens/AddFoodScreen";
 import QrScreen from "./screens/QrScreen";
+import ScanScreen from "./screens/ScanScreen";
 
 import AppContext from "./context/AppContext";
 
@@ -61,6 +62,11 @@ export default function App() {
           <Stack.Screen
             name="Qr"
             component={QrScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Scan"
+            component={ScanScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

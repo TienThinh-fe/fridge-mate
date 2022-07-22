@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+import React from "react";
 
 import GoBack from "../components/GoBack";
 import Input from "../components/Input";
@@ -31,7 +32,7 @@ export default function CreateFridgeScreen({ navigation }) {
   };
 
   const handleScan = () => {
-    console.log("SCAN");
+    navigation.navigate("Scan");
   };
 
   return (
