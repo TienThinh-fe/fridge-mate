@@ -1,4 +1,5 @@
 import { Text, View, Image, StyleSheet, Pressable } from "react-native";
+import React from "react";
 
 export default function FeaturePicker({
   featureName,
@@ -8,7 +9,7 @@ export default function FeaturePicker({
   return (
     <Pressable onPress={handlePressFeature}>
       <View style={styles.container}>
-        <Image style={styles.image} source={require("../assets/fridge.png")} />
+        <Image style={styles.image} source={imageSrc} />
         <Text style={styles.name}>{featureName}</Text>
       </View>
     </Pressable>
