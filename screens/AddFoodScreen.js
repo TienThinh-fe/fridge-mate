@@ -4,7 +4,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 import FridgeInfo from "../components/FridgeInfo";
@@ -26,6 +26,7 @@ export default function AddFoodScreen({ navigation }) {
   const [name, setName] = useState("");
   const [quantity, setQuantity] = useState("");
   const [fridgeId, setFridgeId] = useState("");
+  const [fridgeName, setFridgeName] = useState("");
   const [listOfFood, setListOfFood] = useState([]);
 
   const myContext = useContext(AppContext);
@@ -43,6 +44,7 @@ export default function AddFoodScreen({ navigation }) {
 
     setFridgeId(fId);
     setListOfFood(fridgeSnap.data().listOfFood);
+    setFridgeName(fridgeSnap.data().name);
   };
 
   const handleGoBack = () => {
@@ -84,7 +86,7 @@ export default function AddFoodScreen({ navigation }) {
     <HideKeyboard>
       <View style={styles.container}>
         <GoBack from="Manage fridge" handleGoBack={handleGoBack} />
-        <FridgeInfo fridgeName="My Babe" fridgeId="123abc" />
+        <FridgeInfo fridgeName={fridgeName} fridgeId={fridgeId} />
         <Input placeholder={"Name"} handleChangeText={handleNameInput} />
         <Input
           placeholder={"Quantity / Weight"}
