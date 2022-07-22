@@ -14,6 +14,7 @@ import db from "../firebase";
 export default function ManageScreen({ navigation }) {
   const [listOfFood, setListOfFood] = useState([]);
   const [fridgeName, setFridgeName] = useState("");
+  const [fridgeId, setFridgeId] = useState("");
 
   const myContext = useContext(AppContext);
 
@@ -30,6 +31,7 @@ export default function ManageScreen({ navigation }) {
     const fridgeSnap = await getDoc(fridgeRef);
     setListOfFood(fridgeSnap.data().listOfFood);
     setFridgeName(fridgeSnap.data().name);
+    setFridgeId(fridgeId);
   };
 
   const handleGoBack = () => {
@@ -50,7 +52,7 @@ export default function ManageScreen({ navigation }) {
       <GoBack from="Home" handleGoBack={handleGoBack} />
       <FridgeInfo
         fridgeName={fridgeName}
-        fridgeId="123abc"
+        fridgeId={fridgeId}
         handlePressInfo={handleToQr}
       />
       <FoodList listOfFood={listOfFood} />

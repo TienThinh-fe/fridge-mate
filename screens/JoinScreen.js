@@ -6,7 +6,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 
 import GoBack from "../components/GoBack";
 import Input from "../components/Input";
@@ -19,12 +19,14 @@ const HideKeyboard = ({ children }) => (
 );
 
 export default function CreateFridgeScreen({ navigation }) {
+  const [fridgeID, setFridgeID] = useState("");
+
   const handleGoBack = () => {
     navigation.navigate("Home");
   };
 
   const handleFridgeIdInput = (text) => {
-    console.log("Id: " + text);
+    setFridgeID(text);
   };
 
   const handleJoin = () => {
