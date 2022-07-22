@@ -1,21 +1,37 @@
-import { View, Text, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
+import React from "react";
 
-export default function FoodItem({ foodName, date, quantity, isSpoiled }) {
+export default function FoodItem({
+  handleLongPress,
+  foodName,
+  date,
+  quantity,
+  isSpoiled,
+}) {
   return (
-    <View
-      style={[styles.container, isSpoiled && { backgroundColor: "#FF9D9D" }]}
-    >
-      <View style={styles.item}>
-        <View>
-          <Text style={styles.foodName}>{foodName}</Text>
-          <Text style={styles.date}>{date}</Text>
+    <TouchableOpacity onLongPress={handleLongPress}>
+      <View
+        style={[styles.container, isSpoiled && { backgroundColor: "#FF9D9D" }]}
+      >
+        <View style={styles.item}>
+          <View>
+            <Text style={styles.foodName}>{foodName}</Text>
+            <Text style={styles.date}>{date}</Text>
+          </View>
+          {isSpoiled && <Text style={styles.spoiled}>!</Text>}
         </View>
-        {isSpoiled && <Text style={styles.spoiled}>!</Text>}
+        <View style={styles.quantityContainer}>
+          <Text style={styles.quantity}>{quantity}</Text>
+          {/* <TextInput style={styles.quantity} value={quantity} /> */}
+        </View>
       </View>
-      <View style={styles.quantityContainer}>
-        <Text style={styles.quantity}>{quantity}</Text>
-      </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

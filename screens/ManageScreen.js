@@ -1,6 +1,5 @@
 import { Text, View, StyleSheet, Pressable } from "react-native";
-import React, { Component } from "react";
-import { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { doc, getDoc } from "firebase/firestore";
 
 import FridgeInfo from "../components/FridgeInfo";
@@ -43,7 +42,6 @@ export default function ManageScreen({ navigation }) {
   };
 
   const handleToQr = () => {
-    console.log(123);
     navigation.navigate("Qr");
   };
 
