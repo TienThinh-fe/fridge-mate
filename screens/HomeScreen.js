@@ -28,7 +28,7 @@ export default function HomeScreen({ navigation, route }) {
         navigation.navigate("ManageFridge");
       }
     } else if (type === "recipe") {
-      // navigation.navigate("ManageFridge");
+      navigation.navigate("GetRecipe");
     }
   };
 

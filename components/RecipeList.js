@@ -9,7 +9,6 @@ export default function RecipeList({ listIngredients }) {
   const [listRecipes, setListRecipes] = useState([]);
 
   useEffect(() => {
-    console.log("listIngredients in recipe list: " + listIngredients);
     axios({
       method: "GET",
       url: SPOON_URL,

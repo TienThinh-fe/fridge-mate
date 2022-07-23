@@ -21,7 +21,13 @@ export default function LoginScreen({ navigation }) {
   useEffect(() => {
     if (response?.type === "success") {
       const { authentication } = response;
-      addUserInfo(authentication);
+      addUserInfo(authentication)
+        .then(() => {
+          console.log("LOGIN SUCCESSFULLY");
+        })
+        .catch(() => {
+          console.log("LOGIN ERROR");
+        });
     }
   }, [response]);
 

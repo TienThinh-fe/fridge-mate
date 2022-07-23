@@ -1,6 +1,6 @@
 import { Text, View, StyleSheet, Pressable } from "react-native";
 import React, { useEffect, useState, useContext } from "react";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
 
 import FridgeInfo from "../components/FridgeInfo";
 import GoBack from "../components/GoBack";
@@ -18,8 +18,16 @@ export default function ManageScreen({ navigation }) {
   const myContext = useContext(AppContext);
 
   useEffect(() => {
-    getFridgeData();
-  });
+    getFridgeData()
+      .then(() => {
+        onSnapshot(doc(db, "fridge", fridgeId), (doc) => {
+          setListOfFood(doc.data().listOfFood);
+        });
+      })
+      .catch(() => {
+        console.log("Error getting fridge data");
+      });
+  }, [fridgeId]);
 
   const getFridgeData = async () => {
     const docRef = doc(db, "user", myContext.user.id);

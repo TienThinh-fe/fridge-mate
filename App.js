@@ -31,7 +31,7 @@ export default function App() {
     <AppContext.Provider value={userSettings}>
       <NavigationContainer>
         <Stack.Navigator>
-          {/* <Stack.Screen
+          <Stack.Screen
             name="Login"
             component={LoginScreen}
             options={{ headerShown: false }}
@@ -70,7 +70,7 @@ export default function App() {
             name="Scan"
             component={ScanScreen}
             options={{ headerShown: false }}
-          /> */}
+          />
           <Stack.Screen
             name="GetRecipe"
             component={GetRecipeScreen}

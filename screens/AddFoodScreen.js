@@ -60,7 +60,6 @@ export default function AddFoodScreen({ navigation }) {
   };
 
   const handleAdd = async () => {
-    console.log(listOfFood);
     try {
       await updateDoc(doc(db, "fridge", fridgeId), {
         listOfFood: [
