@@ -6,14 +6,35 @@ import ActionButton from "../components/ActionButton";
 import CheckboxItem from "../components/CheckboxItem";
 
 export default function GetRecipeScreen() {
-  const [listIngredients, setListIngredients] = useState([]);
+  const [listIngredientsInFridge, setListIngredientsInFridge] = useState([
+    {
+      text: "Milk",
+      isChecked: false,
+    },
+    {
+      text: "Eggs",
+      isChecked: false,
+    },
+    {
+      text: "Bread",
+      isChecked: false,
+    },
+  ]);
 
   const handleGoBack = () => {
     console.log("Go back");
   };
 
   const handleChoose = () => {
-    console.log("Choose");
+    console.log("List: ", listIngredientsInFridge);
+  };
+
+  const handleCheck = (index) => {
+    setListIngredientsInFridge((prev) => {
+      const newList = [...prev];
+      newList[index].isChecked = !newList[index].isChecked;
+      return newList;
+    });
   };
 
   return (
@@ -21,7 +42,16 @@ export default function GetRecipeScreen() {
       <GoBack from="Home" handleGoBack={handleGoBack} />
       <Text style={styles.title}>Choose food from your fridge</Text>
       <View style={styles.checkboxContainer}>
-        <CheckboxItem text="Egg" />
+        <ScrollView style={styles.checkboxScroll}>
+          {listIngredientsInFridge.map((ingredient, index) => (
+            <CheckboxItem
+              key={index}
+              text={ingredient.text}
+              isChecked={ingredient.isChecked}
+              handleCheck={() => handleCheck(index)}
+            />
+          ))}
+        </ScrollView>
       </View>
       <ActionButton
         handlePress={handleChoose}
@@ -46,7 +76,14 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   checkboxContainer: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 200,
     marginBottom: 24,
+  },
+  checkboxScroll: {
+    padding: 10,
   },
   checkbox: {
     marginBottom: 10,
