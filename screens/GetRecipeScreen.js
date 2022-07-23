@@ -25,9 +25,22 @@ export default function GetRecipeScreen({ navigation }) {
     console.log("Go back");
   };
 
+  const convertListToText = () => {
+    let text = "";
+    for (let i = 0; i < listIngredientsInFridge.length; i++) {
+      if (i === 0 && listIngredientsInFridge[i].isChecked) {
+        text = listIngredientsInFridge[i].text;
+      } else if (i !== 0 && listIngredientsInFridge[i].isChecked) {
+        text = text + ", " + listIngredientsInFridge[i].text;
+      }
+    }
+    return text;
+  };
+
   const handleChoose = () => {
+    const text = convertListToText();
     navigation.navigate("Recipe", {
-      listIngredientsInFridge: [...listIngredientsInFridge],
+      listIngredientText: text,
     });
   };
 
