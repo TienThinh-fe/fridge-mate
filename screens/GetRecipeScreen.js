@@ -19,6 +19,10 @@ export default function GetRecipeScreen({ navigation }) {
       text: "Bread",
       isChecked: false,
     },
+    {
+      text: "Bacon",
+      isChecked: false,
+    },
   ]);
 
   const handleGoBack = () => {

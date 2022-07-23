@@ -1,6 +1,7 @@
 import { View, ScrollView, StyleSheet } from "react-native";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { SPOON_API_KEY, SPOON_URL } from "@env";
 
 import RecipeThumbnail from "./RecipeThumbnail";
 
@@ -11,9 +12,9 @@ export default function RecipeList({ listIngredients }) {
     console.log("listIngredients in recipe list: " + listIngredients);
     axios({
       method: "GET",
-      url: "https://api.spoonacular.com/recipes/findByIngredients",
+      url: SPOON_URL,
       params: {
-        apiKey: "3c68e94f4c844cbd9cecae45e9e1d334",
+        apiKey: SPOON_API_KEY,
         ingredients: listIngredients,
         number: 10,
       },
