@@ -1,32 +1,49 @@
 import { Text, View, StyleSheet, ScrollView } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { doc, getDoc } from "firebase/firestore";
 
 import GoBack from "../components/GoBack";
 import ActionButton from "../components/ActionButton";
 import CheckboxItem from "../components/CheckboxItem";
 
+import AppContext from "../context/AppContext";
+import db from "../firebase";
+
 export default function GetRecipeScreen({ navigation }) {
-  const [listIngredientsInFridge, setListIngredientsInFridge] = useState([
-    {
-      text: "Milk",
-      isChecked: false,
-    },
-    {
-      text: "Eggs",
-      isChecked: false,
-    },
-    {
-      text: "Bread",
-      isChecked: false,
-    },
-    {
-      text: "Bacon",
-      isChecked: false,
-    },
-  ]);
+  const [listIngredientsInFridge, setListIngredientsInFridge] = useState([]);
+
+  const myContext = useContext(AppContext);
+
+  useEffect(() => {
+    getFridgeData()
+      .then(() => {
+        console.log("getFridgeData");
+      })
+      .catch(() => {
+        console.log("Error getting fridge data");
+      });
+  }, []);
+
+  const getFridgeData = async () => {
+    const docRef = doc(db, "user", myContext.user.id);
+    const docSnap = await getDoc(docRef);
+    const fridgeId = docSnap.data().fridgeId;
+    const fridgeRef = doc(db, "fridge", fridgeId);
+    const fridgeSnap = await getDoc(fridgeRef);
+    const listOfFood = fridgeSnap.data().listOfFood;
+    listOfFood.forEach((element) => {
+      setListIngredientsInFridge((prevState) => [
+        ...prevState,
+        {
+          text: element.name,
+          isChecked: false,
+        },
+      ]);
+    });
+  };
 
   const handleGoBack = () => {
-    console.log("Go back");
+    navigation.navigate("Home");
   };
 
   const convertListToText = () => {
