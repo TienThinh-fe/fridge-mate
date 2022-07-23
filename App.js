@@ -13,6 +13,7 @@ import AddFoodScreen from "./screens/AddFoodScreen";
 import QrScreen from "./screens/QrScreen";
 import ScanScreen from "./screens/ScanScreen";
 import GetRecipeScreen from "./screens/GetRecipeScreen";
+import RecipeScreen from "./screens/RecipeScreen";
 
 import AppContext from "./context/AppContext";
 
@@ -73,6 +74,11 @@ export default function App() {
           <Stack.Screen
             name="GetRecipe"
             component={GetRecipeScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Recipe"
+            component={RecipeScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

@@ -5,7 +5,7 @@ import GoBack from "../components/GoBack";
 import ActionButton from "../components/ActionButton";
 import CheckboxItem from "../components/CheckboxItem";
 
-export default function GetRecipeScreen() {
+export default function GetRecipeScreen({ navigation }) {
   const [listIngredientsInFridge, setListIngredientsInFridge] = useState([
     {
       text: "Milk",
@@ -26,7 +26,9 @@ export default function GetRecipeScreen() {
   };
 
   const handleChoose = () => {
-    console.log("List: ", listIngredientsInFridge);
+    navigation.navigate("Recipe", {
+      listIngredientsInFridge: [...listIngredientsInFridge],
+    });
   };
 
   const handleCheck = (index) => {
